@@ -5,6 +5,8 @@ CREATE TYPE DifficultyLevel AS ENUM(
     'expert'
 );
 
+CREATE CAST (varchar as DifficultyLevel) WITH INOUT AS IMPLICIT;
+
 CREATE TABLE Recipe(
     id SERIAL PRIMARY KEY,
     name VARCHAR(255) NOT NULL,
@@ -12,7 +14,8 @@ CREATE TABLE Recipe(
     preparation_time INT NOT NULL,
     cooking_time INT NOT NULL,
     difficulty_level DifficultyLevel NOT NULL,
-    servings INT NOT NULL
+    servings INT NOT NULL,
+    category_id INT REFERENCES Category(id) ON DELETE SET NULL ON UPDATE CASCADE
 );
 
 CREATE TABLE Ingredient(
